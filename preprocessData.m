@@ -1,10 +1,10 @@
-function [epochedData,gesturelist] = preprocessData(lsl_data,marker_data)
+function [dataChTimeTr,gesturelist] = preprocessData(lsl_data,marker_data)
 %preprocessData Filter and epoch the data
 %   
 
 Fs = 1000;
 numCh = 4;
-epochedData =[];
+dataChTimeTr =[];
 labels = [];
 
     
@@ -24,7 +24,7 @@ end
 
 
 % Run script to epoch: output is ch x timepoints x trials
-[epochedData,gesturelist] = epochFromMarkersToLabels(filtered_lsl_data,marker_data,1400);
-
+[dataChTimeTr,gesturelist] = epochFromMarkersToLabels(filtered_lsl_data,marker_data,1400);
+save("r2d1.mat", "gesturelist", "dataChTimeTr")
 
 end
