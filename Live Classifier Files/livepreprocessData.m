@@ -1,11 +1,10 @@
-function [epochedData,gesturelist] = preprocessData(lsl_data,marker_data)
+function [epochedData] = livepreprocessData(lsl_data)
 %preprocessData Filter and epoch the data
 %   
 
 Fs = 1000;
 numCh = 4;
 epochedData =[];
-labels = [];
 
     
 
@@ -21,10 +20,6 @@ filtered_lsl_data(:,1) = lsl_data(:,1);
 for ch = 1:numCh
     filtered_lsl_data(:,1+ch) = highpass(lsl_data(:,ch+1),5,Fs);
 end
-
-
-% Run script to epoch: output is ch x timepoints x trials
-[epochedData,gesturelist] = epochFromMarkersToLabels(filtered_lsl_data,marker_data,1400);
 
 
 end
