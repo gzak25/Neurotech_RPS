@@ -7,14 +7,15 @@
 % REMOVE THE INCLUDED FEATURES EVENTUALLY SINCE THAT WILL LIKELY BE HARD
 % CODED IN THE FINAL FUNCTIONS
 
-function liveClassification(data,labels,includedFeatures)
+function [ypred] = liveClassification(data,labels,includedFeatures)
     % Prepare the data for the classifier
     [dataChTimeTr,gesturelist] = preprocessData(data,labels);
     feature_table = pullFeatures(dataChTimeTr,includedFeatures);
 
     % Load our pre-saved RPS classifier
-
+    load("mymodel.mat")
     % Run the classifier on our live features
-
+    ypred = currentClassifier.predictFcn(feature_table);
     % Output our classifier's prediction
+    
 end
