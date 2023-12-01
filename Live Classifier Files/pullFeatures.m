@@ -12,7 +12,7 @@ function feature_table = pullFeatures(dataChTimeTr,includedFeatures)
     % includedFeatures = {'var','mean', 'mode', 'median', 'range', 'std',
     % 'mad'};  REMOVE THIS LATER THIS IS JUST A REFERENCE
 
-    feature_table = extractFeatures(dataChTimeTr,includedFeatures,Fs, testgesturelistAll, label_rps);
+    feature_table = extractFeatures(dataChTimeTr,includedFeatures,Fs);
 
     % Skipping saving the data for now, might be worth adding later though?
 
@@ -20,7 +20,7 @@ end
 
 
 % Define the helper functionthat actually extracts the features
-function [feature_table] = extractFeatures(dataChTimeTr,includedFeatures, Fs, labels, label_rps)
+function [feature_table] = extractFeatures(dataChTimeTr,includedFeatures, Fs)
     
     % List of channels to include (can change to only use some)
     includedChannels = 1:size(dataChTimeTr,1);
@@ -62,6 +62,16 @@ function [feature_table] = extractFeatures(dataChTimeTr,includedFeatures, Fs, la
                 fvalues = squeeze(std(dataChTimeTr,0,2))';
             case 'mad'
                 fvalues = squeeze(mad(dataChTimeTr,0,2))';
+            case 'meanfreq'
+                for i = 1:4
+                    fvalues(i, :) = meanfreq(squeeze(R1R2dataChTimeTr(1,:,:)))
+                end
+            case 'medianfreq'
+                for j = 1:4
+                    fvalues(i,:) = medfreq(squeeze(R1R2dataChTimeTr(1,:,:)))
+                end
+            
+            % 
             % case 'wl'
             %     fvalues = squeeze(jWaveformLength(dataChTimeTr, 2))
             % case 'ssc'
@@ -110,36 +120,36 @@ function [feature_table] = extractFeatures(dataChTimeTr,includedFeatures, Fs, la
         end
     end
 
-feature_array = table2array(feature_table);
-numCond = length(label_rps);
-
-
-    c = 1;
-    var_data1(1,:) = feature_table.var_Ch1(c == labels)';
-    mean_data1(1,:) = feature_table.mean_Ch1(c == labels)';
-    mode_data1(1,:) = feature_table.mode_Ch1(c == labels)';
-    median_data1(1,:) = feature_table.median_Ch1(c == labels)';
-    range_data1(1,:) = feature_table.range_Ch1(c == labels)';
-    std_data1(1,:) = feature_table.std_Ch1(c == labels)';
-    mad_data1(1,:) = feature_table.mad_Ch1(c == labels)';
-
-    c = 2;
-    var_data2(1,:) = feature_table.var_Ch1(c == labels)';
-    mean_data2(1,:) = feature_table.mean_Ch1(c == labels)';
-    mode_data2(1,:) = feature_table.mode_Ch1(c == labels)';
-    median_data2(1,:) = feature_table.median_Ch1(c == labels)';
-    range_data2(1,:) = feature_table.range_Ch1(c == labels)';
-    std_data2(1,:) = feature_table.std_Ch1(c == labels)';
-    mad_data2(1,:) = feature_table.mad_Ch1(c == labels)';
-
-    c = 3;
-    var_data3(1,:) = feature_table.var_Ch1(c == labels)';
-    mean_data3(1,:) = feature_table.mean_Ch1(c == labels)';
-    mode_data3(1,:) = feature_table.mode_Ch1(c == labels)';
-    median_data3(1,:) = feature_table.median_Ch1(c == labels)';
-    range_data3(1,:) = feature_table.range_Ch1(c == labels)';
-    std_data3(1,:) = feature_table.std_Ch1(c == labels)';
-    mad_data3(1,:) = feature_table.mad_Ch1(c == labels)';
+% feature_array = table2array(feature_table);
+% numCond = length(label_rps);
+% 
+% 
+%     c = 1;
+%     var_data1(1,:) = feature_table.var_Ch1(c == labels)';
+%     mean_data1(1,:) = feature_table.mean_Ch1(c == labels)';
+%     mode_data1(1,:) = feature_table.mode_Ch1(c == labels)';
+%     median_data1(1,:) = feature_table.median_Ch1(c == labels)';
+%     range_data1(1,:) = feature_table.range_Ch1(c == labels)';
+%     std_data1(1,:) = feature_table.std_Ch1(c == labels)';
+%     mad_data1(1,:) = feature_table.mad_Ch1(c == labels)';
+% 
+%     c = 2;
+%     var_data2(1,:) = feature_table.var_Ch1(c == labels)';
+%     mean_data2(1,:) = feature_table.mean_Ch1(c == labels)';
+%     mode_data2(1,:) = feature_table.mode_Ch1(c == labels)';
+%     median_data2(1,:) = feature_table.median_Ch1(c == labels)';
+%     range_data2(1,:) = feature_table.range_Ch1(c == labels)';
+%     std_data2(1,:) = feature_table.std_Ch1(c == labels)';
+%     mad_data2(1,:) = feature_table.mad_Ch1(c == labels)';
+% 
+%     c = 3;
+%     var_data3(1,:) = feature_table.var_Ch1(c == labels)';
+%     mean_data3(1,:) = feature_table.mean_Ch1(c == labels)';
+%     mode_data3(1,:) = feature_table.mode_Ch1(c == labels)';
+%     median_data3(1,:) = feature_table.median_Ch1(c == labels)';
+%     range_data3(1,:) = feature_table.range_Ch1(c == labels)';
+%     std_data3(1,:) = feature_table.std_Ch1(c == labels)';
+%     mad_data3(1,:) = feature_table.mad_Ch1(c == labels)';
 
 
     % Commenting out all of the plotting code for now, because it likely

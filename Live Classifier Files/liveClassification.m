@@ -11,7 +11,7 @@ function [ypred] = liveClassification(data)
     % Prepare the data for the classifier
     includedFeatures = {'var','mean', 'mode', 'median', 'range', 'std', 'mad'}; 
     selected_features = [21 22 23 24 25 26 27 28];
-    [dataChTimeTr] = preprocessData(data);   %Consider removing labels input
+    [dataChTimeTr] = livepreprocessData(data);   %Consider removing labels input
     feature_table = pullFeatures(dataChTimeTr,includedFeatures);
      selected_feature_table = feature_table(:,selected_features);
 
